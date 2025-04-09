@@ -1,0 +1,21 @@
+#!/bin/bash
+
+for file in /workspaces/harry121500/SWE_2021_41_2025_1_week_6-main/files/*; do
+    if [[ -f "$file" ]]; then
+        dup_name=$(basename "$file")
+        first_char="${dup_name:0:1}" 
+        ascii_code=$(printf '%d' "'$first_char")
+
+        
+        if (( ascii_code >= 97 && ascii_code <= 122 )); then
+            mkdir -p "/workspaces/harry121500/SWE_2021_41_2025_1_week_6-main/files/${first_char}"
+            mv "$file" "/workspaces/harry121500/SWE_2021_41_2025_1_week_6-main/files/${first_char}/"
+            echo "File moved to directory: ${first_char}"
+
+        elif (( ascii_code >= 65 && ascii_code <= 90 )); then
+            lower_char=$(printf "\\$(printf '%03o' $((ascii_code + 32)))")
+            mkdir -p "/workspaces/harry121500/SWE_2021_41_2025_1_week_6-main/files/${lower_char}"
+            mv "$file" "/workspaces/harry121500/SWE_2021_41_2025_1_week_6-main/files/${lower_char}/"
+        fi
+    fi
+done
